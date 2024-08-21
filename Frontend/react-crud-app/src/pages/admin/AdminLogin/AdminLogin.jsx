@@ -1,37 +1,36 @@
 import React, { useState, useEffect } from 'react'
-import './Login.css'
+import './AdminLogin.css'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { useDispatch,useSelector } from 'react-redux';
-import { setUser } from '../../../redux/Store';
+import { setAdmin } from '../../../redux/Store';
 
 
-const Login = () => {
-    const [email,setEmail]=useState('')
+const AdminLogin = () => {
+    const [userName,setUserName]=useState('')
     const [password,setPassword] = useState('')
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const isAuth = useSelector((state) => state.auth.success);
+    const isAuth = useSelector((state) => state.adminAuth.success);
 
     useEffect(() => {
       if (isAuth) {
-        navigate('/');
+        navigate('/adminDashboard');
       }
     }, [isAuth, navigate]);
 
     const handleSubmit = async(event)=>{
       event.preventDefault()
       try {
-        axios.post('//localhost:5000/login', {email, password})
+        axios.post('//localhost:5000/adminLogin', {userName, password})
         .then((response)=>{
           if(response.data.success){
-            dispatch(setUser(response.data.userData))
-            localStorage.setItem("user",JSON.stringify(response.data.userData))
-            toast.success('successfully logined')
-            navigate('/')
+            dispatch(setAdmin())
+            localStorage.setItem("adminAuth", JSON.stringify(1))
+            navigate('/adminDashboard')
           }else{
             toast.error(response.data.message)
           }
@@ -51,25 +50,15 @@ const Login = () => {
   return (
     <div className='login'>
         <div className="login-form">
-        <h1>Login</h1>
+        <h1>Admin Login</h1>
         <form onSubmit={handleSubmit}>
-          <input onChange={(e)=>setEmail(e.target.value)} value={email}  type="email" placeholder='Email' />
+          <input onChange={(e)=>setUserName(e.target.value)} value={userName}  type="text" placeholder='user Name' />
           <input onChange={(e)=>setPassword(e.target.value)} value={password} type="password" placeholder='Password' />
           <button  type='submit'>Login</button>
-          <div className="form-help">
-            <div className="remember">
-              <input type="checkbox" />
-              <label htmlFor="">Remember Me</label>
-            </div>
-            <p>Need Help?</p>
-          </div>
         </form>
-        <div className="form-switch">
-            <p>New to Netflix? <span onClick={()=>navigate('/register')}>Sign Up Now</span></p>
-        </div>
       </div>
     </div>
   )
 }
 
-export default Login
+export default AdminLogin
