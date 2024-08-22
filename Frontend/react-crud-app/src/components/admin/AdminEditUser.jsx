@@ -1,19 +1,18 @@
-import React, { useState }  from 'react'
+import React, { useState,useContext }  from 'react'
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../redux/Store';
+import { dashboardContext } from '../../pages/admin/AdminDashboard/Dashboard';
+import { toast } from 'react-toastify';
 
-
-const EditProfile = ({handleEditForm,show,userData}) => {
+const AdminEditUser = ({show,userData,handleVisible}) => {
     const [userName,setUserName] = useState(userData.userName)
     const [email,setEmail] = useState(userData.email)
     const [error,setError] = useState({status:false,err:''})
-    
 
-    const dispatch = useDispatch()
+    const handleCallback= useContext(dashboardContext)
+
 
     const validateForm = () => {
         const nameReg = /^(?! )[A-Za-z]+(?: [A-Za-z]+)*(?<! )$/;
@@ -33,7 +32,7 @@ const EditProfile = ({handleEditForm,show,userData}) => {
         return true;
       };
 
-    const onSubmit = async(event)=>{  
+      const onSubmit = async(event)=>{  
         event.preventDefault()
 
         if (!validateForm()) {
@@ -42,13 +41,13 @@ const EditProfile = ({handleEditForm,show,userData}) => {
 
         try {
 
-            axios.patch(`//localhost:5000/updateProfile?userId=${userData._id}`,{userName,email})
+            axios.patch(`//localhost:5000/adminEditProfile?userId=${userData._id}`,{userName,email})
             .then((res)=>{
-                if(res.data.success){  
-                    dispatch(setUser({ ...userData, userName, email })); 
-                    handleEditForm()
+                if(res.data.success){ 
+                    handleCallback() 
+                    handleVisible()
+                    toast.success("Edited successfully")
                 }else{
-                    console.log("not okkk");
                     setError({status:true,err:res.data.message})
                 }
             }).catch((err)=>{
@@ -64,9 +63,11 @@ const EditProfile = ({handleEditForm,show,userData}) => {
             
         }
     }
-    return (
-      <>
-        <Modal show={show} onHide={handleEditForm}>
+
+
+  return (
+    <>
+        <Modal show={show} onHide={handleVisible}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Profile</Modal.Title>
           </Modal.Header>
@@ -92,7 +93,7 @@ const EditProfile = ({handleEditForm,show,userData}) => {
                 />
               </Form.Group>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleEditForm}>
+            <Button variant="secondary" onClick={handleVisible}>
               Close
             </Button>
             <Button type='submit' variant="primary">
@@ -104,7 +105,7 @@ const EditProfile = ({handleEditForm,show,userData}) => {
           </Modal.Body>
         </Modal>
       </>
-    );
+  )
 }
 
-export default EditProfile
+export default AdminEditUser

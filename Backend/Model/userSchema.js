@@ -17,7 +17,7 @@ const userSchema=mongoose.Schema({
     imageURL:{
         type:String,
         default:'empty'
-    }
+    },
 },{
     timestamps: true 
 })

@@ -54,7 +54,7 @@ const Register = () => {
         <div className="register-form">
         <h1>Sign Up</h1>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input {...register('userName',{required:'User Name is requird', pattern:{value: /^(?! )[A-Za-z]+(?<! )$/,message: 'Name can only contain letters'}})} style={{border: errors.userName ? '2px solid red' : '1px solid #ccc',padding: '8px', 
+          <input {...register('userName',{required:'User Name is requird', pattern:{value: /^(?! )[A-Za-z]+(?: [A-Za-z]+)*(?<! )$/,message: 'Name can only contain letters'}})} style={{border: errors.userName ? '2px solid red' : '1px solid #ccc',padding: '8px', 
                 borderRadius: '4px',}} type="text" placeholder='First Name' />
           {errors.userName && <small style={{color:'red'}}>{errors.userName.message}</small>}          
           <input {...register('email', {required: 'Please enter your email', pattern:{value: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, message: 'Enter a Proper Email' }} )} 

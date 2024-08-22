@@ -43,7 +43,65 @@ const getUserDetails = async(req,res)=>{
     }
 }
 
+const addNewUser=async(req,res)=>{
+    try {
+        const {userName,email,password} = req.body
+        let user = await User.findOne({email:email})
+
+        if(user){
+            return res.status(400).json({message:"Email is already taken"})
+        }
+
+        user = new User({userName,email,password})
+        await user.save()
+
+        return res.status(200).json({success:true})
+    } catch (error) {
+        
+    }
+}
+
+const deleteUser= async(req,res)=>{
+    try {
+        const userId = req.query.userId
+
+        await User.deleteOne({_id:userId})
+        return res.status(200).json({success:true})
+    } catch (error) {
+        
+    }
+}
+
+const adminEditProfile = async(req,res)=>{
+    try {
+        const {userName,email} = req.body
+        const userId = req.query.userId
+
+        let user = await User.findOne({$and:[{_id:{$ne:userId}},{email:email}]})
+
+        if(user){
+            return res.status(400).json({
+                message:"This email is already taken"
+            })
+        }else{
+            user = await User.findByIdAndUpdate(userId,
+                {$set:{userName:userName,
+                    email:email
+                }})
+            
+            return res.status(200).json({
+                success:true
+            })
+        }
+    } catch (error) {
+        
+    }
+}
+
 module.exports = {
     adminLogin,
-    getUserDetails
+    getUserDetails,
+    addNewUser,
+    deleteUser,
+    adminEditProfile
 }
