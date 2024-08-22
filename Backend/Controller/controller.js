@@ -43,7 +43,7 @@ const userLogin = async(req,res)=>{
                 userId:user._id
             }
 
-            const token = jwt.sign(data, jwtSecretKey,{expiresIn:'1h'})
+            const token = jwt.sign(data, jwtSecretKey,{expiresIn:'1h'})            
 
             return res.status(200).json({
                 success:true,
@@ -59,6 +59,20 @@ const userLogin = async(req,res)=>{
     }
 }
 
+
+const getUserData = async(req,res)=>{
+    try {
+        const userId = req.query.userId
+
+        const userData = await User.findById(userId)        
+
+        if(userData){
+            return res.status(200).json({userData:userData})
+        }
+    } catch (error) {
+        
+    }
+}
 
 const updateProfile=async(req,res)=>{
     try {
@@ -102,5 +116,6 @@ module.exports = {
     createUser,
     userLogin,
     updateProfile,
-    updateImage
+    updateImage,
+    getUserData
 }

@@ -1,74 +1,8 @@
-.home{
-    height: 100vh;
-    background: linear-gradient(to right, #000000, #120d3a);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.profile-image{
-    margin-right: 20px;
-}
-
-.image-container {
-    width: 250px; 
-    height: 250px; 
-    border-radius: 50px; 
-    overflow: hidden; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.image-container img {
-    width: 100%; 
-    height: auto; 
-}
-
-.userDetails{
-    color: white;
-}
-
-
-.home-btns{
-    display: flex;
-    gap: 10px;
-    margin-bottom: 50px;
-    margin-top: 20px;
-}
-
-
-.home-btns .btn{
-    border: 0;
-    outline: 0;
-    padding: 8px 20px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 15px;   
-    font-weight: 600;
-    background: white;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-
-.home-btns .btn:hover{
-    background: #ffffffbf;
-}
-
-
-@media (max-width:500px){
-    .home{
-        display: block;
-        justify-content: center;
-        align-items: center;
-        margin: auto;
-    }
-
-    .profile-image{
-        justify-content: center;
-        align-items: center;
-        margin:auto;
-    }
+.userPage{
+    background-image: url('../../../assets/user_banner.jpg');
+    background-size: cover;          
+    background-position: center;     
+    background-repeat: no-repeat;    
+    height: 100vh;                   
+    margin: 0; 
 }

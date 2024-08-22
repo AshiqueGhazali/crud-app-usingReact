@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const LazyLogin = React.lazy(()=>import('./pages/User/Login/Login'))
 const LazyRegister = React.lazy(()=>import('./pages/User/Register/Register'))
 const LazyHome = React.lazy(()=>import('./pages/User/Home/Home'))
+const LazyProfile = React.lazy(()=>import('./pages/User/Profile/Profile'))
 const LazyAdminLogin = React.lazy(()=>import('./pages/admin/AdminLogin/AdminLogin'))
 const LazyAdminDashboard = React.lazy(()=>import('./pages/admin/AdminDashboard/Dashboard'))
 
@@ -22,7 +23,7 @@ const App = () => {
   // })
 
   const userLocalStorage = JSON.parse(localStorage.getItem("user"));
-  const AdminLocalStorage=JSON.parse(localStorage.getItem("adminAuth"))
+  const AdminLocalStorage=localStorage.getItem("adminAuth")
   const dispatch=useDispatch()
 
   useEffect(()=>{
@@ -43,6 +44,7 @@ const App = () => {
       <ToastContainer theme='dark' />
         <Routes>
           <Route path='/' element={<LazyHome />} />
+          <Route path='/profile' element={<LazyProfile />} />
           <Route path='/login' element={<LazyLogin />} />
           <Route path='/register' element={<LazyRegister />} />
           <Route path='/admin/login' element={<LazyAdminLogin />} />

@@ -28,8 +28,9 @@ const AdminLogin = () => {
         axios.post('//localhost:5000/adminLogin', {userName, password})
         .then((response)=>{
           if(response.data.success){
+            const token = response.data.jwtToken            
             dispatch(setAdmin())
-            localStorage.setItem("adminAuth", JSON.stringify(1))
+            localStorage.setItem("adminAuth", token)
             navigate('/adminDashboard')
           }else{
             toast.error(response.data.message)

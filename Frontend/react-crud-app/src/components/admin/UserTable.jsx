@@ -21,8 +21,17 @@ const UserTable = ({userDatas, search}) => {
   }
 
   const deleteUser=async(userId)=>{
+
+    const token = localStorage.getItem('adminAuth')   
+
     try {
-      axios.delete(`//localhost:5000/deleteUser?userId=${userId}`)
+      axios.delete(`//localhost:5000/deleteUser?userId=${userId}`,
+        { 
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       .then((response)=>{
         if(response.data.success){
           handleCallback()

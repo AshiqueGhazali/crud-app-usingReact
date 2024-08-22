@@ -5,6 +5,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../../redux/Store';
+import { toast } from 'react-toastify';
 
 
 const EditProfile = ({handleEditForm,show,userData}) => {
@@ -42,10 +43,13 @@ const EditProfile = ({handleEditForm,show,userData}) => {
 
         try {
 
-            axios.patch(`//localhost:5000/updateProfile?userId=${userData._id}`,{userName,email})
+            axios.patch(`//localhost:5000/updateProfile?userId=${userData._id}`,
+              {userName,email},
+            )
             .then((res)=>{
                 if(res.data.success){  
                     dispatch(setUser({ ...userData, userName, email })); 
+                    toast.success('Edited successfully')
                     handleEditForm()
                 }else{
                     console.log("not okkk");

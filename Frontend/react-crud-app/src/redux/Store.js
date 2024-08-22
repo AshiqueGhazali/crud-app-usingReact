@@ -32,7 +32,6 @@ const adminAuthSlice=createSlice({
 
   reducers:{
     setAdmin:(state,action)=>{
-
       state.admin=action.payload;
       state.success=true
 

@@ -41,7 +41,16 @@ const AdminEditUser = ({show,userData,handleVisible}) => {
 
         try {
 
-            axios.patch(`//localhost:5000/adminEditProfile?userId=${userData._id}`,{userName,email})
+          const token = localStorage.getItem('adminAuth')   
+
+            axios.patch(`//localhost:5000/adminEditProfile?userId=${userData._id}`,
+              {userName,email},
+              { 
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            )
             .then((res)=>{
                 if(res.data.success){ 
                     handleCallback() 

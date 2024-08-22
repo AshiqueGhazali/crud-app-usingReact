@@ -18,7 +18,7 @@ const adminLogin = async(req,res)=>{
                 userName:admin,
             }
 
-            const token = jwt.sign(data, jwtSecretKey,{expiresIn:'1h'})
+            const token = jwt.sign(data, jwtSecretKey,{expiresIn:'1h'})            
 
             return res.status(200).json({
                 success:true,

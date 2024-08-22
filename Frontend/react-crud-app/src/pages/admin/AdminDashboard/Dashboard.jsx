@@ -44,7 +44,13 @@ const Dashboard = () => {
     }
 
     useEffect(()=>{
-        axios.get('//localhost:5000/getUserDetails')
+        const token = localStorage.getItem('adminAuth')         
+
+        axios.get('//localhost:5000/getUserDetails',{
+            headers: {
+                Authorization: `Bearer ${token}`,
+              },
+        })
         .then((response)=>{
             const {usersData}= response.data            
             setUserDatas(usersData)            

@@ -17,11 +17,20 @@ const AddUser = ({show, handleAddUserToggle}) => {
 
     const onSubmit = async(data)=>{
         try {
+
+          const token = localStorage.getItem('adminAuth')   
+
           axios.post('//localhost:5000/addNewUser', {
-            userName:data.userName,
-            email:data.email, 
-            password:data.password
-          })
+              userName:data.userName,
+              email:data.email, 
+              password:data.password
+            },
+            { 
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
           .then((response) => {
             if(response.data.success){
                 handleCallback()

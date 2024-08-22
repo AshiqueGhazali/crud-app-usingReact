@@ -8,15 +8,17 @@ const middleware = require('../Middleware/middleware')
 
 router.post('/createUser',userController.createUser)
 router.post('/login',userController.userLogin)
+router.get('/getUserData',userController.getUserData)
 router.patch('/updateProfile',userController.updateProfile)
 router.post('/updateImage',userController.updateImage)
 
+
 // admin
 router.post('/adminLogin',adminController.adminLogin)
-router.get('/getUserDetails',adminController.getUserDetails)
-router.post('/addNewUser',adminController.addNewUser)
-router.delete('/deleteUser',adminController.deleteUser)
-router.patch('/adminEditProfile',adminController.adminEditProfile)
+router.get('/getUserDetails',middleware.routeProtect,adminController.getUserDetails)
+router.post('/addNewUser',middleware.routeProtect,adminController.addNewUser)
+router.delete('/deleteUser',middleware.routeProtect,adminController.deleteUser)
+router.patch('/adminEditProfile',middleware.routeProtect,adminController.adminEditProfile)
 
 
 module.exports=router;
